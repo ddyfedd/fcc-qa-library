@@ -132,7 +132,7 @@ suite('Functional Tests', function() {
           .send({ comment: 'test comment' })
           .end((err, res) => {
             assert.equal(res.status, 200);
-            assert.equal(res.text, 'noo book exists');
+            assert.equal(res.text, 'no book exists');
             done();
           });
       });
