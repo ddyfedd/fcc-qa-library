@@ -105,7 +105,7 @@ module.exports = function (app) {
               title: saveData.title,
               comments: saveData.comments,
               commentcount: saveData.comments.length
-            })
+            });
           });
         }
       });
