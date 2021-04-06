@@ -8,6 +8,8 @@
 
 'use strict';
 
+const Book = require('../models').Book;
+
 module.exports = function (app) {
 
   app.route('/api/books')
@@ -19,6 +21,23 @@ module.exports = function (app) {
     .post(function (req, res){
       let title = req.body.title;
       //response will contain new book object including atleast _id and title
+
+      if(!title) {
+        res.send('missing required field title');
+        return;
+      }
+
+      const newBook = new Book({ title, comments: [] });
+      newBook.save((err, data) => {
+        if(err || !data) {
+          res.send('there was an error saving');
+        } else {
+          res.json({
+            _id: data._id,
+            title: data.title
+          });
+        }
+      });
     })
     
     .delete(function(req, res){
