@@ -74,11 +74,11 @@ module.exports = function (app) {
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
       Book.findById(bookid, (err, data) => {
         if(!data) {
-          res.send('no book exist');
+          res.send('no book exists');
         } else {
           res.json({
-            _id: data._id,
             title: data.title,
+            _id: data._id,
             comments: data.comments,
             commentcount: data.comments.length
           });
