@@ -93,10 +93,10 @@ module.exports = function (app) {
       if(!comment) {
         res.send('missing required field comment');
         return;
-      }
+      } 
       Book.findById(bookid, (err, bookdata) => {
         if(!bookdata) {
-          res.send('no book exist');
+          res.send('no book exists');
         } else {
           bookdata.comments.push(comment);
           bookdata.save((err, data) => {
@@ -116,7 +116,7 @@ module.exports = function (app) {
       //if successful response will be 'delete successful'
       Book.findByIdAndRemove(bookid, (err, data) => {
         if(err || !data) {
-          res.send('no book exist');
+          res.send('no book exists');
         } else {
           res.send('delete successful');
         }
