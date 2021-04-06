@@ -12,6 +12,7 @@ const assert = chai.assert;
 const server = require('../server');
 
 chai.use(chaiHttp);
+let bookID;
 
 suite('Functional Tests', function() {
 
@@ -25,6 +26,9 @@ suite('Functional Tests', function() {
       .end(function(err, res){
         assert.equal(res.status, 200);
         assert.isArray(res.body, 'response should be an array');
+        if (!res.body[0]) {
+          done();
+        }
         assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
         assert.property(res.body[0], 'title', 'Books in array should contain title');
         assert.property(res.body[0], '_id', 'Books in array should contain _id');
@@ -41,11 +45,24 @@ suite('Functional Tests', function() {
     suite('POST /api/books with title => create book object/expect book object', function() {
       
       test('Test POST /api/books with title', function(done) {
-        //done();
+        chai.request(server).post('/api/books')
+          .send({ title: 'test-title' })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            bookID = res.body._id;
+            assert.equal(res.body.title, 'test-title');
+            done();
+          });
       });
       
       test('Test POST /api/books with no title given', function(done) {
-        //done();
+        chai.request(server).post('/api/books')
+          .send({})
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, 'missing required field title');
+            done();
+          });
       });
       
     });
