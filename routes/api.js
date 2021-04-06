@@ -77,9 +77,9 @@ module.exports = function (app) {
           res.send('no book exists');
         } else {
           res.json({
-            title: data.title,
-            _id: data._id,
             comments: data.comments,
+            _id: data._id,
+            title: data.title,            
             commentcount: data.comments.length
           });
         }
@@ -99,12 +99,12 @@ module.exports = function (app) {
           res.send('no book exist');
         } else {
           bookdata.comments.push(comment);
-          bookdata.save((err, saveData) => {
+          bookdata.save((err, data) => {
             res.json({
-              _id: saveData._id,
-              title: saveData.title,
-              comments: saveData.comments,
-              commentcount: saveData.comments.length
+              comments: data.comments,
+              _id: data._id,
+              title: data.title,            
+              commentcount: data.comments.length
             });
           });
         }
