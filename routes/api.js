@@ -114,6 +114,13 @@ module.exports = function (app) {
     .delete(function(req, res){
       let bookid = req.params.id;
       //if successful response will be 'delete successful'
+      Book.findByIdAndRemove(bookid, (err, data) => {
+        if(err || !data) {
+          res.send('no book exist');
+        } else {
+          res.send('delete successful');
+        }
+      });
     });
   
 };
